@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal"
+           fx:controller="transactions.controllers.TransactionsController">
+
+    <VBox prefWidth="Infinity" prefHeight="Infinity">
+        <HBox>
+            <Text styleClass="mainHeading">Transactions</Text>
+            <Button fx:id="addTransactionButton" text="Add" onAction="#openNewTransactionSidebar"/>
+            <Button fx:id="removeTransactionButton" text="Remove"/>
+            <Button fx:id="sortButton" text="Sort"/>
+            <Button fx:id="dateFilterButton" text="Date Filter"/>
+            <Button fx:id="filterButton" text="Filter"/>
+        </HBox>
+        <!-- For main.java.transactions list -->
+    </VBox>
+
+    <VBox alignment="BASELINE_RIGHT" visible="false" fx:id="addNewTransactionSidebar" maxWidth="400" >
+        <fx:include source="newTransaction.fxml" />
+    </VBox>
+
+</StackPane>

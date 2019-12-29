@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal"
+          fx:controller="overview.controllers.OverviewController" gridLinesVisible="true">
+
+    <!--  Constrains for the main gridpane  -->
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="33" />
+        <ColumnConstraints percentWidth="67" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints percentHeight="100" />
+    </rowConstraints>
+
+    <!--  End Constrains for the main gridpane  -->
+
+    <GridPane gridLinesVisible="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.fillHeight="true">
+
+        <!--    Constraints for the left tiles    -->
+
+        <columnConstraints>
+            <ColumnConstraints percentWidth="100" />
+        </columnConstraints>
+
+        <rowConstraints>
+            <RowConstraints percentHeight="33.33"/>
+            <RowConstraints percentHeight="33.33"/>
+            <RowConstraints percentHeight="33.33"/>
+        </rowConstraints>
+
+        <!--    End of constraints for the left tiles    -->
+
+    </GridPane>
+    <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.fillHeight="true">
+    </VBox>
+
+</GridPane>

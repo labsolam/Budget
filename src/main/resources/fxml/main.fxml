@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" maxWidth="Infinity" maxHeight="Infinity"
+           prefHeight="Infinity" prefWidth="Infinity">
+
+    <TabPane>
+
+        <tabs>
+            <Tab fx:id="overviewTab" text="Overview" closable="false">
+                <content>
+                    <fx:include source="overview.fxml"/>
+                </content>
+            </Tab>
+            <Tab fx:id="transactionTab" text="Transactions" closable="false">
+                <content>
+                    <fx:include source="transactions.fxml"/>
+                </content>
+            </Tab>
+            <Tab fx:id="categoriesTab" text="Categories" closable="false">
+                <content>
+                    <fx:include source="categories.fxml" />
+                </content>
+            </Tab>
+        </tabs>
+
+    </TabPane>
+
+</StackPane>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+        fx:controller="transactions.controllers.TransactionsController">
+
+    <Label>Transaction Name</Label>
+    <TextField></TextField>
+
+    <Label>category</Label>
+    <ComboBox fx:id="newTransactionsCategoriesComboBox" />
+
+    <Label>Label</Label>
+    <ComboBox fx:id="newTransactionsLabelComboBox"></ComboBox>
+
+    <Label></Label>
+
+    <Button onAction="#addTransaction">Create Transaction</Button>
+
+</VBox>

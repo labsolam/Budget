@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="category.controllers.CategoryController" >
+
+    <VBox>
+    <Button onAction="#openNewCategorySidebar" >Add Category</Button>
+    <Button>Remove Category</Button>
+
+    <TableView fx:id="categoriesTable">
+        <columns>
+            <TableColumn text="Category"></TableColumn>
+            <TableColumn text="Total Spend"></TableColumn>
+            <TableColumn text="Budget"></TableColumn>
+        </columns>
+    </TableView>
+    </VBox>
+
+    <VBox fx:id="addNewCategorySidebar" visible="false"  >
+        <fx:include source="newCategory.fxml" />
+    </VBox>
+
+</StackPane>
