@@ -1,0 +1,34 @@
+/*
+I tried to use the new module system. However, there are issues using resources in Flyway.
+All SQL scripts reside in a db.migration in the resources directory. During compilation the resources directory is not
+part of any module, thus the directory is encapsulated not letting any classes use it's resources.
+Flyway fails because it cannot use any of the encapsulated SQL files.
+I researched into solutions, I have deemed they are slightly complicated for now, possibly causing issues or more work
+down the line. I have removed the original module-info.java file to not have use the module system for flyway to find
+and use all SQL files, and for me to continue working on the application itself.
+
+Details of the issue and possible solutions are here:
+https://stackoverflow.com/questions/51864473/where-do-resource-files-go-in-a-gradle-project-that-builds-a-java-9-module
+
+May be of use:
+https://stackoverflow.com/questions/49678324/how-to-work-with-resources-in-java-9-modules?answertab=active#tab-top
+
+
+One solution was to use the org.javamodularity.moduleplugin. However, JavaFX plugin stopped the tasks from working.
+Not sure why.
+
+ */
+
+//module Budget {
+//	requires javafx.controls;
+//	requires javafx.fxml;
+//	requires java.sql;
+//	requires org.flywaydb.core;
+//
+//	exports overview;
+//	exports overview.controllers;
+//	exports transactions.controllers;
+//
+//	opens transactions.controllers to javafx.fxml;
+//	opens category.controllers to javafx.fxml;
+//}

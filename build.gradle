@@ -6,6 +6,11 @@ plugins {
 
 version '1.0.0'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
 repositories {
     mavenCentral()
 }
@@ -18,15 +23,15 @@ dependencies {
 
 javafx {
     version = "11"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 application {
-    mainClassName = 'Budget/overview.Main'
+    mainClassName = 'overview.Main'
 }
 
 jar {
     manifest {
-        attributes "Main-Class" : 'overview.Main'
+        attributes "Main-Class": 'overview.Main'
     }
 }
