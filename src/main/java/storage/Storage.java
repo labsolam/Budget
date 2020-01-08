@@ -1,40 +1,36 @@
 package storage;
 
-import category.controllers.CategoryTable;
+import org.flywaydb.core.Flyway;
+import org.flywaydb.core.internal.jdbc.DriverDataSource;
+import org.flywaydb.core.internal.scanner.classpath.ClassPathLocationScanner;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.MissingResourceException;
+import java.net.URLClassLoader;
+import java.sql.*;
 
 public class Storage
 {
-	private static List<Table> TableClasses = new ArrayList<>();
-
-	private static final String DATABASE_LOCATION = "";
+	private static final String DATABASE_LOCATION = "jdbc:h2:~/temp/.BudgetDb"; //TODO: Check this works on windows
 
 	public Storage()
 	{
-		this.register(new CategoryTable());
+
 	}
 
-	public void register(Table Table)
+	public void loadDatabase() throws SQLException
 	{
-		if (!TableClasses.contains(Table))
-		{
-			TableClasses.add(Table);
-		}
+		Flyway flyway = Flyway.configure().dataSource(DATABASE_LOCATION,"","").load();
+		flyway.migrate();
+
+
+		ClassLoader.getSystemClassLoader().getResourceAsStream("db/migration/V1__Original_Structure.sql");
+		ClassLoader.getSystemClassLoader().getResource("db/migration/V1__Original_Structure.sql");
+		this.getClass().getClassLoader().getResourceAsStream("db/migration/V1__Original_Structure.sql");
+		this.getClass().getResource("/db/migration/V1__Original_Structure.sql");
+		this.getClass().getClassLoader().getResource("db/migration/V1__Original_Structure.sql");
+
+		System.out.println();
 	}
 
-	public void createDataTables()
-	{
-		for (Table Table : TableClasses)
-		{
-			if(!Table.isTableCreated())
-			{
-				Table.createDatabase();
-			}
-		}
-	}
 
 //	public void getConnection()
 //	{

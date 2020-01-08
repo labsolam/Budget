@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.flywaydb.core.Flyway;
 import storage.Storage;
 
 /**
@@ -17,12 +18,15 @@ public class Main extends Application {
     {
         super.init();
         Storage storage = new Storage();
+        storage.loadDatabase();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/main.fxml"));
+
+        getClass().getClassLoader().getResource("fxml/main.fxml");
 
         Parent root = loader.load();
         Scene scene = new Scene(root, 300, 275);
