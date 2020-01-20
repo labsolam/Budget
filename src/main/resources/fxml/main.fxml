@@ -2,33 +2,13 @@
 
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<TabPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+         minWidth="Infinity" prefWidth="Infinity" maxWidth="Infinity"
+         minHeight="Infinity" prefHeight="Infinity" maxHeight="Infinity"
+         fx:id="navigation">
 
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" maxWidth="Infinity" maxHeight="Infinity"
-           prefHeight="Infinity" prefWidth="Infinity">
+    <Tab fx:id="overviewTab" text="Overview" closable="false" />
+    <Tab fx:id="transactionTab" text="Transactions" closable="false" />
+    <Tab fx:id="categoriesTab" text="Categories" closable="false" />
 
-    <TabPane>
-
-        <tabs>
-            <Tab fx:id="overviewTab" text="Overview" closable="false">
-                <content>
-                    <fx:include source="overview.fxml"/>
-                </content>
-            </Tab>
-            <Tab fx:id="transactionTab" text="Transactions" closable="false">
-                <content>
-                    <fx:include source="transactions.fxml"/>
-                </content>
-            </Tab>
-            <Tab fx:id="categoriesTab" text="Categories" closable="false">
-                <content>
-                    <fx:include source="categories.fxml" />
-                </content>
-            </Tab>
-        </tabs>
-
-    </TabPane>
-
-</StackPane>
+</TabPane>

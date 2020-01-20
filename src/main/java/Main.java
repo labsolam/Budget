@@ -1,5 +1,3 @@
-package overview;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,10 +20,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        MainController mainController = new MainController();
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/main.fxml"));
-
-        getClass().getClassLoader().getResource("fxml/main.fxml");
+        loader.setController(mainController);
 
         Parent root = loader.load();
         Scene scene = new Scene(root, 300, 275);

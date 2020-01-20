@@ -1,4 +1,15 @@
 .header
 {
-    fx-size : 100;
+    -fx-font-size : 25;
+    -fx-font-weight : bold;
+
+}
+
+.hiddenDrawer {
+    -fx-background-color: white;
+    -fx-effect: dropshadow( gaussian, red , 15, 1, 10, 10);
+}
+
+.errorMessage {
+    -fx-text-fill: red;
 }

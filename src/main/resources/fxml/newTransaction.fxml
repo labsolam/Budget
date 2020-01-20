@@ -3,8 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-        fx:controller="transactions.controllers.TransactionsController">
+      xmlns:fx="http://javafx.com/fxml">
 
     <Label>Transaction Name</Label>
     <TextField></TextField>
@@ -17,6 +16,6 @@
 
     <Label></Label>
 
-    <Button onAction="#addTransaction">Create Transaction</Button>
+    <Button>Create Transaction</Button>
 
 </VBox>

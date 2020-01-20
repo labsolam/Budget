@@ -7,13 +7,12 @@
 <?import javafx.scene.text.Text?>
 <?import java.net.URL?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal"
-           fx:controller="transactions.controllers.TransactionsController">
+<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal" >
 
     <VBox prefWidth="Infinity" prefHeight="Infinity">
         <HBox>
             <Text styleClass="mainHeading">Transactions</Text>
-            <Button fx:id="addTransactionButton" text="Add" onAction="#openNewTransactionSidebar"/>
+            <Button fx:id="addTransactionButton" text="Add"/>
             <Button fx:id="removeTransactionButton" text="Remove"/>
             <Button fx:id="sortButton" text="Sort"/>
             <Button fx:id="dateFilterButton" text="Date Filter"/>

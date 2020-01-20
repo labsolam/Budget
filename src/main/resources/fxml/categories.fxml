@@ -3,25 +3,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
 <StackPane xmlns="http://javafx.com/javafx"
-           xmlns:fx="http://javafx.com/fxml"
-           fx:controller="category.controllers.CategoryController" >
+           xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT">
+
+    <stylesheets>
+        <URL value="@/css/generic.css"/>
+    </stylesheets>
 
     <VBox>
-    <Button onAction="#openNewCategorySidebar" >Add Category</Button>
-    <Button>Remove Category</Button>
+        <Button fx:id="categoriesOpenAddCategorySidebar">Add Category</Button>
+        <Button>Remove Category</Button>
 
-    <TableView fx:id="categoriesTable">
-        <columns>
-            <TableColumn text="Category"></TableColumn>
-            <TableColumn text="Total Spend"></TableColumn>
-            <TableColumn text="Budget"></TableColumn>
-        </columns>
-    </TableView>
+        <TableView fx:id="categoriesTable">
+            <columns>
+                <TableColumn text="Category"/>
+                <TableColumn text="Total Spend"/>
+                <TableColumn text="Budget"/>
+            </columns>
+        </TableView>
     </VBox>
 
-    <VBox fx:id="addNewCategorySidebar" visible="false"  >
-        <fx:include source="newCategory.fxml" />
+    <VBox fx:id="categoriesAddNewCategorySidebar" visible="false" styleClass="hiddenDrawer" StackPane.alignment="TOP_RIGHT"
+          maxHeight="Infinity" maxWidth="300" alignment="TOP_RIGHT">
     </VBox>
 
 </StackPane>

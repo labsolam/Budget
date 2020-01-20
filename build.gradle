@@ -6,6 +6,14 @@ plugins {
 
 version '1.0.0'
 
+sourceSets {
+    main {
+        resources {
+            exclude 'future/**'
+        }
+    }
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -27,11 +35,18 @@ javafx {
 }
 
 application {
-    mainClassName = 'overview.Main'
+    mainClassName = 'Main'
 }
 
 jar {
     manifest {
-        attributes "Main-Class": 'overview.Main'
+        attributes "Main-Class": 'Main'
     }
 }
+
+//run {
+//    doLast {
+//        File test = file(System.getProperty("user.home") + '/temp/.BudgetDb.mv.db')
+//        test.delete()
+//    }
+//}

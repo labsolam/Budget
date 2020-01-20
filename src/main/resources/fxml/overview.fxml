@@ -4,17 +4,17 @@
 <?import java.net.URL?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal"
-          fx:controller="overview.controllers.OverviewController" gridLinesVisible="true">
+          gridLinesVisible="true">
 
     <!--  Constrains for the main gridpane  -->
 
     <columnConstraints>
-        <ColumnConstraints percentWidth="33" />
-        <ColumnConstraints percentWidth="67" />
+        <ColumnConstraints percentWidth="33"/>
+        <ColumnConstraints percentWidth="67"/>
     </columnConstraints>
 
     <rowConstraints>
-        <RowConstraints percentHeight="100" />
+        <RowConstraints percentHeight="100"/>
     </rowConstraints>
 
     <!--  End Constrains for the main gridpane  -->
@@ -24,7 +24,7 @@
         <!--    Constraints for the left tiles    -->
 
         <columnConstraints>
-            <ColumnConstraints percentWidth="100" />
+            <ColumnConstraints percentWidth="100"/>
         </columnConstraints>
 
         <rowConstraints>
