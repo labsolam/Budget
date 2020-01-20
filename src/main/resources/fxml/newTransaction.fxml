@@ -2,14 +2,13 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="transactions.controllers.NewTransactionController">
 
     <Label>Transaction Name</Label>
     <TextField></TextField>
 
     <Label>category</Label>
-    <ComboBox fx:id="newTransactionsCategoriesComboBox" />
+    <ComboBox fx:id="newTransactionsCategoriesComboBox"/>
 
     <Label>Label</Label>
     <ComboBox fx:id="newTransactionsLabelComboBox"></ComboBox>

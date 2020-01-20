@@ -5,9 +5,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<?import java.net.URL?>
-
-<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal" >
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="transactions.controllers.TransactionsController" >
 
     <VBox prefWidth="Infinity" prefHeight="Infinity">
         <HBox>

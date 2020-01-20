@@ -2,13 +2,19 @@
 
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<TabPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+<TabPane xmlns:fx="http://javafx.com/fxml"
          minWidth="Infinity" prefWidth="Infinity" maxWidth="Infinity"
          minHeight="Infinity" prefHeight="Infinity" maxHeight="Infinity"
          fx:id="navigation">
 
-    <Tab fx:id="overviewTab" text="Overview" closable="false" />
-    <Tab fx:id="transactionTab" text="Transactions" closable="false" />
-    <Tab fx:id="categoriesTab" text="Categories" closable="false" />
+    <Tab fx:id="overviewTab" text="Overview" closable="false">
+        <fx:include source="overview.fxml"/>
+    </Tab>
+    <Tab fx:id="transactionTab" text="Transactions" closable="false">
+        <fx:include source="transactions.fxml"/>
+    </Tab>
+    <Tab fx:id="categoriesTab" text="Categories" closable="false">
+        <fx:include source="categories.fxml"/>
+    </Tab>
 
 </TabPane>
