@@ -12,10 +12,10 @@
     </stylesheets>
 
     <VBox>
-        <Button fx:id="openAddCategorySidebar" onAction="#openNewCategorySidebar">Add Category</Button>
+        <Button onAction="#openNewCategorySidebar">Add Category</Button>
         <Button>Remove Category</Button>
 
-        <TableView fx:id="categoriesTable">
+        <TableView>
             <columns>
                 <TableColumn text="Category"/>
                 <TableColumn text="Total Spend"/>

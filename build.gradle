@@ -35,12 +35,12 @@ javafx {
 }
 
 application {
-    mainClassName = 'Main'
+    mainClassName = 'main.Main'
 }
 
 jar {
     manifest {
-        attributes "Main-Class": 'Main'
+        attributes "Main-Class": 'main.Main'
     }
 }
 

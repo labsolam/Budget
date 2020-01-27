@@ -15,7 +15,12 @@ public class Storage
 
 	}
 
-	public void loadDatabase()
+	/**
+	 * Migrate the database to the latest version.
+	 *
+	 * Note, a H2 database is automatically created if one doesn't exist. Hence, "create"AndMigrate.
+	 */
+	public void createAndMigrateDatabase()
 	{
 		Flyway flyway = Flyway.configure().dataSource(DATABASE_LOCATION, USERNAME, PASSWORD).load();
 		flyway.migrate();

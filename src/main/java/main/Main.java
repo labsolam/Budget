@@ -1,3 +1,5 @@
+package main;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -6,20 +8,26 @@ import javafx.stage.Stage;
 import storage.Storage;
 
 /**
- * Main entry into the application.
+ * Main.Main entry into the application.
  */
-public class Main extends Application {
+public class Main extends Application
+{
+    private Model model;
 
     @Override
     public void init() throws Exception
     {
         super.init();
         Storage storage = new Storage();
-        storage.loadDatabase();
+        storage.createAndMigrateDatabase();
+
+        Model.initialiseModel();
+        this.model = Model.getModel();
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception
+    {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/main.fxml"));
 
@@ -34,7 +42,8 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 }
