@@ -1,7 +1,8 @@
 CREATE TABLE Category
 (
     ID INT IDENTITY NOT NULL,
-    Name VARCHAR NOT NULL
+    Name VARCHAR NOT NULL,
+    Budget DECIMAL NOT NULL
 );
 
 CREATE TABLE Transaction

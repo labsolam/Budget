@@ -13,13 +13,13 @@
 
     <VBox>
         <Button onAction="#openNewCategorySidebar">Add Category</Button>
-        <Button>Remove Category</Button>
 
-        <TableView>
+        <TableView fx:id="categoriesTable" editable="true">
             <columns>
-                <TableColumn text="Category"/>
-                <TableColumn text="Total Spend"/>
-                <TableColumn text="Budget"/>
+                <TableColumn fx:id="categoryColumn" text="Category" />
+                <TableColumn fx:id="totalSpendColumn" text="Total Spend"/>
+                <TableColumn fx:id="budgetColumn" text="Budget"/>
+                <TableColumn fx:id="deleteColumn" text="Delete" />
             </columns>
         </TableView>
     </VBox>

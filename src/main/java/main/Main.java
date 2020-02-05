@@ -1,11 +1,14 @@
 package main;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import storage.Storage;
+
+import java.sql.SQLException;
 
 /**
  * Main.Main entry into the application.
@@ -13,12 +16,25 @@ import storage.Storage;
 public class Main extends Application
 {
     private Model model;
+    private Storage storage;
 
     @Override
     public void init() throws Exception
     {
         super.init();
-        Storage storage = new Storage();
+        this.storage = new Storage();
+
+        try
+        {
+            storage.startServer();
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Failed to initialise server. Main init()");
+            System.err.println(e.getMessage());
+            Platform.exit();
+        }
+
         storage.createAndMigrateDatabase();
 
         Model.initialiseModel();
@@ -41,6 +57,12 @@ public class Main extends Application
         primaryStage.setMaximized(true);
     }
 
+    @Override
+    public void stop() throws Exception
+    {
+        super.stop();
+        this.storage.stopServer();
+    }
 
     public static void main(String[] args)
     {
