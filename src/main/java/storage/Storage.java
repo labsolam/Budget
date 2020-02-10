@@ -38,7 +38,7 @@ public class Storage
 	 * Migrate the database to the latest version.
 	 *
 	 * Note, a H2 database is automatically created if one doesn't exist. Hence, "create"AndMigrate.
-	 * Only true if using an embedded database. Other you have to make your own.
+	 * Only true if using an embedded database. Otherwise you have to make your own.
 	 */
 	public void createAndMigrateDatabase()
 	{

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="account.controllers.AccountController"
+           alignment="TOP_LEFT">
+
+    <stylesheets>
+        <URL value="@/css/generic.css"/>
+    </stylesheets>
+
+    <VBox>
+        <Button onAction="#openNewAccountSidebar">Add Account</Button>
+
+        <TableView fx:id="accountTable" editable="true">
+            <columns>
+                <TableColumn fx:id="accountColumn" text="Account"/>
+                <TableColumn fx:id="typeColumn" text="Type"/>
+                <TableColumn fx:id="deleteColumn" text="Delete"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <VBox fx:id="addNewAccountSidebar" visible="false" styleClass="hiddenDrawer"
+          StackPane.alignment="TOP_RIGHT"
+          maxHeight="Infinity" maxWidth="300" alignment="TOP_RIGHT">
+        <fx:include source="newAccount.fxml"/>
+    </VBox>
+
+</StackPane>

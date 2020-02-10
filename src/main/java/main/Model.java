@@ -1,5 +1,7 @@
 package main;
 
+import account.controllers.AccountStorageHandler;
+import account.models.Account;
 import category.controllers.CategoryStorageHandler;
 import category.models.Category;
 import javafx.collections.FXCollections;
@@ -10,6 +12,7 @@ public class Model
 	private static Model model;
 
 	private ObservableList<Category> categories;
+	private ObservableList<Account> accounts;
 
 	private Model()
 	{
@@ -33,13 +36,21 @@ public class Model
 			model = new Model();
 
 			initialiseCategories();
+			initialiseAccounts();
 		}
 	}
 
 	private static void initialiseCategories()
 	{
-		model.categories = FXCollections.observableList(CategoryStorageHandler.loadData());
+		model.categories = FXCollections.observableList(new CategoryStorageHandler().loadData());
 	}
+
+	private static void initialiseAccounts()
+	{
+
+		model.accounts = FXCollections.observableList(new AccountStorageHandler().loadData());
+	}
+
 
 	public ObservableList<Category> getCategories()
 	{

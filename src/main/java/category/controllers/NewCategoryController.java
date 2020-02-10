@@ -24,10 +24,12 @@ public class NewCategoryController
 	@FXML private VBox newCategorySidebar;
 
 	private Model model;
+	private CategoryStorageHandler categoryStorageHandler;
 
 	public NewCategoryController()
 	{
 		this.model = Model.getModel();
+		this.categoryStorageHandler = new CategoryStorageHandler();
 	}
 
 	public void initialize()
@@ -59,7 +61,7 @@ public class NewCategoryController
 			{
 				try
 				{
-					int newCategoryId = CategoryStorageHandler.create(this.categoryNameTextBox.getText(), new BigDecimal(this.categoryBudgetTextBox.getText()));
+					int newCategoryId = this.categoryStorageHandler.create(this.categoryNameTextBox.getText(), new BigDecimal(this.categoryBudgetTextBox.getText()));
 
 					this.addCategoryToModel(new Category(newCategoryId, this.categoryNameTextBox.getText(), new BigDecimal(this.categoryBudgetTextBox.getText()))); //TODO: Find a better way to do the conversion. Possibly with the TextFormatter? Seems to have a string converter.
 					this.closeCreateCategory();

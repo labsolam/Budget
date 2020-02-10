@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="account.controllers.NewAccountController" fx:id="newAccountSidebar">
+    <stylesheets>
+        <URL value="@../css/generic.css"/>
+    </stylesheets>
+
+    <Label styleClass="header">New Account</Label>
+
+    <Label>Name</Label>
+    <TextField fx:id="accountNameTextBox" promptText="Account Name" />
+
+    <Label>Type</Label>
+    <ComboBox fx:id="accountTypeComboBox" editable="false" >
+    </ComboBox>
+
+    <Button onAction="#createAccount">Create</Button>
+    <Button onAction="#closeCreateAccount">Cancel</Button>
+
+    <Label fx:id="accountExistsErrorLabel" visible="false" styleClass="errorMessage">Category already
+        exists!
+    </Label>
+    <Label fx:id="failedToCreateAccountErrorLabel" visible="false" styleClass="errorMessage">Failed to
+        create category
+    </Label>
+    <Label fx:id="accountNameInvalidLabel" visible="false" styleClass="errorMessage">Invalid category name
+    </Label>
+
+</VBox>

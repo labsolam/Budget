@@ -18,6 +18,7 @@ import java.sql.SQLException;
 public class CategoryController
 {
 	private Model model;
+	private CategoryStorageHandler categoryStorageHandler;
 
 	@FXML private TableView<Category> categoriesTable;
 	@FXML private TableColumn<Category, String> categoryColumn;
@@ -29,6 +30,7 @@ public class CategoryController
 	public CategoryController()
 	{
 		this.model = Model.getModel();
+		this.categoryStorageHandler = new CategoryStorageHandler();
 	}
 
 	public void initialize()
@@ -42,7 +44,7 @@ public class CategoryController
 				Category newCategory = new Category(event.getRowValue());
 				newCategory.setName(event.getNewValue());
 
-				CategoryStorageHandler.update(newCategory);
+				this.categoryStorageHandler.update(newCategory);
 
 				//Category updated successfully as no exception was thrown
 				this.updateCategory(newCategory);
@@ -65,7 +67,7 @@ public class CategoryController
 				try
 				{
 					Category deleteCategory = (Category) ((Button) e.getSource()).getUserData();
-					CategoryStorageHandler.delete(deleteCategory);
+					this.categoryStorageHandler.delete(deleteCategory);
 
 					//Category updated successfully as no exception was thrown
 					this.deleteCategory(deleteCategory);
