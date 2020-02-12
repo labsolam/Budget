@@ -23,27 +23,20 @@ public class CategoryStorageHandler
 
 	}
 
-	public List<Category> loadData()
+	public List<Category> loadData() throws SQLException
 	{
 		List<Category> categories = new ArrayList<>();
 
-		try (
+		try
+		(
 				PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(GET_ALL_CATEGORIES_SQL);
 				ResultSet result = preparedStatement.executeQuery();
 		)
 		{
-
 			while (result.next())
 			{
 				categories.add(new Category(result.getInt(1), result.getString(2), result.getBigDecimal(3)));
 			}
-		}
-		catch (SQLException e)
-		{
-			//TODO: Throw exception specific for categories loading. Maybe get the caller to try again.
-			// After a number of attempts give up and exit?
-			System.err.println("SQL Error in Categories load data");
-			System.err.println(e.getMessage());
 		}
 
 		return categories;

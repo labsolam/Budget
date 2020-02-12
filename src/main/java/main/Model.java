@@ -7,6 +7,8 @@ import category.models.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
+
 public class Model
 {
 	private static Model model;
@@ -29,7 +31,7 @@ public class Model
 		return model;
 	}
 
-	public static void initialiseModel()
+	public static void initialiseModel() throws SQLException
 	{
 		if (model == null)
 		{
@@ -40,12 +42,18 @@ public class Model
 		}
 	}
 
-	private static void initialiseCategories()
+	public static void clearModel()
+	{
+		model = null;
+	}
+
+
+	private static void initialiseCategories() throws SQLException
 	{
 		model.categories = FXCollections.observableList(new CategoryStorageHandler().loadData());
 	}
 
-	private static void initialiseAccounts()
+	private static void initialiseAccounts() throws SQLException
 	{
 
 		model.accounts = FXCollections.observableList(new AccountStorageHandler().loadData());
