@@ -59,9 +59,14 @@ public class Model
 		model.accounts = FXCollections.observableList(new AccountStorageHandler().loadData());
 	}
 
-
 	public ObservableList<Category> getCategories()
 	{
 		return this.categories;
 	}
+
+	public ObservableList<Account> getAccounts()
+	{
+		return this.accounts;
+	}
+
 }

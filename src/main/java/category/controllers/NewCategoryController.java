@@ -1,18 +1,16 @@
 package category.controllers;
 
-import category.common.CategoriesCommon;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
-import main.Model;
 import category.models.Category;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
+import main.Model;
+import main.common.AppCommon;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.function.UnaryOperator;
 
 public class NewCategoryController
 {
@@ -34,36 +32,29 @@ public class NewCategoryController
 
 	public void initialize()
 	{
-		UnaryOperator<Change> filter = change ->
-		{
-			String newText = change.getControlNewText();
-
-			if (newText.matches("([1-9][0-9]*)?"))
-			{
-				return change;
-			}
-			return null;
-		};
-
-		this.categoryBudgetTextBox.setTextFormatter(new TextFormatter<>(CategoriesCommon.bigDecimalStringConverter, new BigDecimal(0), filter));
+		this.categoryBudgetTextBox.setTextFormatter(new TextFormatter<>(AppCommon.bigDecimalStringConverter,
+				new BigDecimal(0), AppCommon.onlyNumbersAllowedFilter));
 	}
 
 	@FXML
 	private void createCategory()
 	{
-		if (this.model.getCategories().contains(new Category(this.categoryNameTextBox.getText())))
+		if (this.doesCategoryExist(this.categoryNameTextBox.getText()))
 		{
 			this.categoryExistsErrorLabel.setVisible(true);
 		}
 		else
 		{
-			if(isCategoryNameValid(this.categoryNameTextBox.getText()))
+			if(isNameValid(this.categoryNameTextBox.getText()))
 			{
 				try
 				{
-					int newCategoryId = this.categoryStorageHandler.create(this.categoryNameTextBox.getText(), new BigDecimal(this.categoryBudgetTextBox.getText()));
+					int newCategoryId = this.categoryStorageHandler.create(this.categoryNameTextBox.getText(),
+							new BigDecimal(this.categoryBudgetTextBox.getText()));
 
-					this.addCategoryToModel(new Category(newCategoryId, this.categoryNameTextBox.getText(), new BigDecimal(this.categoryBudgetTextBox.getText()))); //TODO: Find a better way to do the conversion. Possibly with the TextFormatter? Seems to have a string converter.
+					this.addCategoryToModel(new Category(newCategoryId, this.categoryNameTextBox.getText(),
+							new BigDecimal(this.categoryBudgetTextBox.getText()))); //TODO: Find a better way to do the conversion. Possibly with the TextFormatter? Seems to have a string converter.
+
 					this.closeCreateCategory();
 				}
 				catch (SQLException e)
@@ -102,7 +93,7 @@ public class NewCategoryController
 	 * @param name Name of the category.
 	 * @return True if the name is valid. False otherwise.
 	 */
-	private boolean isCategoryNameValid(String name)
+	private boolean isNameValid(String name)
 	{
 		if (name == null)
 		{
@@ -110,6 +101,11 @@ public class NewCategoryController
 		}
 
 		return !name.isBlank();
+	}
+
+	private boolean doesCategoryExist(String name)
+	{
+		return this.model.getCategories().stream().anyMatch(a -> a.getName().equals(name));
 	}
 
 }

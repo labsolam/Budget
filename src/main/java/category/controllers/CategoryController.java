@@ -1,6 +1,5 @@
 package category.controllers;
 
-import category.common.CategoriesCommon;
 import category.models.Category;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
@@ -11,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import main.Model;
+import main.common.AppCommon;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -56,7 +56,7 @@ public class CategoryController
 		});
 
 		this.budgetColumn.setCellValueFactory(new PropertyValueFactory<>("budget"));
-		this.budgetColumn.setCellFactory(TextFieldTableCell.forTableColumn(CategoriesCommon.bigDecimalStringConverter));
+		this.budgetColumn.setCellFactory(TextFieldTableCell.forTableColumn(AppCommon.bigDecimalStringConverter));
 
 		this.deleteColumn.setCellValueFactory(param ->
 		{

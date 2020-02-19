@@ -1,7 +1,7 @@
 package category.controllers;
 
 import category.models.Category;
-import storage.Storage;
+import main.storage.Storage;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -44,25 +44,19 @@ public class CategoryStorageHandler
 
 	public int create(String categoryName, BigDecimal budget) throws SQLException
 	{
-		try (PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(NEW_CATEGORY_SQL, Statement.RETURN_GENERATED_KEYS))
-		{
-			preparedStatement.setString(1, categoryName);
-			preparedStatement.setBigDecimal(2, budget);
-			preparedStatement.executeUpdate();
+		PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(NEW_CATEGORY_SQL, Statement.RETURN_GENERATED_KEYS);
 
-			if (preparedStatement.getGeneratedKeys().next())
-			{
-				return preparedStatement.getGeneratedKeys().getInt(1);
-			}
-			else
-			{
-				throw new SQLException(); //TODO: Query failed if there aren't any keys
-			}
-		}
-		catch (SQLException e)
+		preparedStatement.setString(1, categoryName);
+		preparedStatement.setBigDecimal(2, budget);
+		preparedStatement.executeUpdate();
+
+		if (preparedStatement.getGeneratedKeys().next())
 		{
-			System.err.println(e.getMessage());
-			throw e; //TODO: Connection failed - better exception throwing
+			return preparedStatement.getGeneratedKeys().getInt(1);
+		}
+		else
+		{
+			throw new SQLException(); //TODO: Query failed if there aren't any keys
 		}
 	}
 

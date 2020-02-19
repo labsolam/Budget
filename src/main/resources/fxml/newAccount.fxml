@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 <?import java.net.URL?>
+<?import javafx.scene.text.Text?>
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="account.controllers.NewAccountController" fx:id="newAccountSidebar">
     <stylesheets>
         <URL value="@../css/generic.css"/>
@@ -13,9 +14,11 @@
     <Label>Name</Label>
     <TextField fx:id="accountNameTextBox" promptText="Account Name" />
 
+    <Label>Starting Balance</Label>
+    <TextField fx:id="startingBalanceTextBox" promptText="Starting Balance" />
+
     <Label>Type</Label>
-    <ComboBox fx:id="accountTypeComboBox" editable="false" >
-    </ComboBox>
+    <ComboBox fx:id="accountTypeComboBox" />
 
     <Button onAction="#createAccount">Create</Button>
     <Button onAction="#closeCreateAccount">Cancel</Button>

@@ -12,12 +12,25 @@ public class Account
 	private SimpleObjectProperty<AccountTypeEnum> type;
 	private SimpleObjectProperty<BigDecimal> startingBalance;
 
+	public Account(String name)
+	{
+		this(-1, name, AccountTypeEnum.DEBIT, new BigDecimal(0));
+	}
+
 	public Account(int id, String name, AccountTypeEnum type, BigDecimal startingBalance)
 	{
 		this.id = id;
 		this.name = new SimpleStringProperty(name);
 		this.type = new SimpleObjectProperty<>(type);
 		this.startingBalance = new SimpleObjectProperty<>(startingBalance);
+	}
+
+	public Account(Account account)
+	{
+		this.id = account.getId();
+		this.name = new SimpleStringProperty(account.getName());
+		this.type = new SimpleObjectProperty<>(account.getType());
+		this.startingBalance = new SimpleObjectProperty<>(account.getStartingBalance());
 	}
 
 	public int getId()

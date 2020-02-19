@@ -42,11 +42,6 @@ public class Category
 		this.id = newId;
 	}
 
-	public int getIdProperty()
-	{
-		return this.id;
-	}
-
 	public String getName()
 	{
 		return this.name.get();
@@ -57,7 +52,7 @@ public class Category
 		this.name.set(name);
 	}
 
-	public SimpleStringProperty getNameProperty()
+	public SimpleStringProperty nameProperty()
 	{
 		return this.name;
 	}
@@ -72,7 +67,7 @@ public class Category
 		this.budget.setValue(budget);
 	}
 
-	public SimpleObjectProperty<BigDecimal> getBudgetProperty()
+	public SimpleObjectProperty<BigDecimal> budgetProperty()
 	{
 		return this.budget;
 	}
@@ -87,7 +82,7 @@ public class Category
 		this.totalSpend.setValue(totalSpend);
 	}
 
-	public SimpleObjectProperty<BigDecimal> getTotalSpendProperty()
+	public SimpleObjectProperty<BigDecimal> totalSpendProperty()
 	{
 		return this.totalSpend;
 	}

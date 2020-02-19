@@ -8,6 +8,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 import main.Model;
 
+import java.math.BigDecimal;
+
 public class AccountController
 {
 	private Model model;
@@ -15,8 +17,9 @@ public class AccountController
 	@FXML TableView<Account> accountTable;
 	@FXML TableColumn<Account, String> accountColumn;
 	@FXML TableColumn<Account, String> typeColumn;
-	@FXML VBox addNewAccountSidebar;
 	@FXML TableColumn<Account, Button> deleteColumn;
+	@FXML TableColumn<Account, BigDecimal> startingBalanceColumn;
+	@FXML VBox addNewAccountSidebar;
 
 	public AccountController()
 	{

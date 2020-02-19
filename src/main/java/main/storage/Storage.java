@@ -1,4 +1,4 @@
-package storage;
+package main.storage;
 
 import org.flywaydb.core.Flyway;
 import org.h2.tools.Server;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class Storage
 {
 	private static final String DATABASE_LOCATION = "jdbc:h2:tcp://localhost/~/temp/.BudgetDb"; //TODO: Check this works on windows, make directory hidden
-	//	private static final String DATABASE_LOCATION = "jdbc:h2:~/temp/.BudgetDb";
+//		private static final String DATABASE_LOCATION = "jdbc:h2:~/temp/.BudgetDb";
 	private static final String USERNAME = "";
 	private static final String PASSWORD = "";
 
