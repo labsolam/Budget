@@ -23,13 +23,13 @@
     <Button onAction="#createAccount">Create</Button>
     <Button onAction="#closeCreateAccount">Cancel</Button>
 
-    <Label fx:id="accountExistsErrorLabel" visible="false" styleClass="errorMessage">Category already
+    <Label fx:id="accountExistsErrorLabel" visible="false" styleClass="errorMessage">Account already
         exists!
     </Label>
     <Label fx:id="failedToCreateAccountErrorLabel" visible="false" styleClass="errorMessage">Failed to
-        create category
+        create account
     </Label>
-    <Label fx:id="accountNameInvalidLabel" visible="false" styleClass="errorMessage">Invalid category name
+    <Label fx:id="accountNameInvalidLabel" visible="false" styleClass="errorMessage">Invalid account name
     </Label>
 
 </VBox>

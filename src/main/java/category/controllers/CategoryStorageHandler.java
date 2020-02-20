@@ -14,7 +14,7 @@ import java.util.List;
 public class CategoryStorageHandler
 {
 	private static final String GET_ALL_CATEGORIES_SQL = "SELECT * FROM Category";
-	private static final String NEW_CATEGORY_SQL = "INSERT INTO Category (ID, NAME, BUDGET) VALUES ( null, ?, ? ) ";
+	private static final String NEW_CATEGORY_SQL = "INSERT INTO Category (NAME, BUDGET) VALUES ( ?, ? ) ";
 	private static final String UPDATE_CATEGORY_SQL = "UPDATE Category SET NAME = ?, BUDGET = ? WHERE ID = ?";
 	private static final String DELETE_CATEGORY_SQL = "DELETE FROM Category WHERE ID = ?";
 
@@ -62,44 +62,29 @@ public class CategoryStorageHandler
 
 	public void delete(Category category) throws SQLException
 	{
-		try (PreparedStatement statement = Storage.getConnection().prepareStatement(DELETE_CATEGORY_SQL))
-		{
-			statement.setInt(1, category.getId());
-			int rowsDeleted = statement.executeUpdate();
+		PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(DELETE_CATEGORY_SQL);
+		preparedStatement.setInt(1, category.getId());
 
-			if(rowsDeleted == 0)
-			{
-				throw new SQLException("Failed to update!"); //TODO: Find a better exception and/or message
-			}
-		}
-		catch (SQLException e)
+		int rowsDeleted = preparedStatement.executeUpdate();
+
+		if (rowsDeleted != 1)
 		{
-			System.err.println("Error in Categories deleteCategories method");
-			System.err.println(e.getMessage());
-			throw e; //TODO: Connection failed  - better exception throwing needed
+			throw new SQLException("Failed to delete category!"); //TODO: Find a better exception and/or message
 		}
 	}
 
 	public void update(Category category) throws SQLException
 	{
-		try (PreparedStatement statement = Storage.getConnection().prepareStatement(UPDATE_CATEGORY_SQL);)
-		{
-			statement.setString(1, category.getName());
-			statement.setBigDecimal(2, category.getBudget());
-			statement.setInt(3, category.getId());
+		PreparedStatement statement = Storage.getConnection().prepareStatement(UPDATE_CATEGORY_SQL);
+		statement.setString(1, category.getName());
+		statement.setBigDecimal(2, category.getBudget());
+		statement.setInt(3, category.getId());
 
-			int rowsModified = statement.executeUpdate();
+		int rowsModified = statement.executeUpdate();
 
-			if(rowsModified == 0)
-			{
-				throw new SQLException("Failed to update!"); //TODO: Find a better exception and/or message
-			}
-		}
-		catch (SQLException e)
+		if (rowsModified == 0)
 		{
-			System.err.println("Error in Categories updateCategories method");
-			System.err.println(e.getMessage());
-			throw e; //TODO: Connection failed  - better exception throwing needed
+			throw new SQLException("Failed to update category!"); //TODO: Find a better exception and/or message
 		}
 	}
 }
