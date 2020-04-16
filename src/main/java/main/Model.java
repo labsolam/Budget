@@ -1,15 +1,20 @@
 package main;
 
+import account.controllers.AccountStorageHandler;
+import account.models.Account;
 import category.controllers.CategoryStorageHandler;
 import category.models.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
 
 public class Model
 {
 	private static Model model;
 
 	private ObservableList<Category> categories;
+	private ObservableList<Account> accounts;
 
 	private Model()
 	{
@@ -26,23 +31,42 @@ public class Model
 		return model;
 	}
 
-	public static void initialiseModel()
+	public static void initialiseModel() throws SQLException
 	{
 		if (model == null)
 		{
 			model = new Model();
 
 			initialiseCategories();
+			initialiseAccounts();
 		}
 	}
 
-	private static void initialiseCategories()
+	public static void clearModel()
 	{
-		model.categories = FXCollections.observableList(CategoryStorageHandler.loadData());
+		model = null;
+	}
+
+
+	private static void initialiseCategories() throws SQLException
+	{
+		model.categories = FXCollections.observableList(new CategoryStorageHandler().loadData());
+	}
+
+	private static void initialiseAccounts() throws SQLException
+	{
+
+		model.accounts = FXCollections.observableList(new AccountStorageHandler().loadData());
 	}
 
 	public ObservableList<Category> getCategories()
 	{
 		return this.categories;
 	}
+
+	public ObservableList<Account> getAccounts()
+	{
+		return this.accounts;
+	}
+
 }

@@ -5,13 +5,14 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import storage.Storage;
+import main.storage.Storage;
 
 import java.sql.SQLException;
 
 /**
- * Main.Main entry into the application.
+ * Main entry into the application.
  */
 public class Main extends Application
 {
@@ -37,7 +38,29 @@ public class Main extends Application
 
         storage.createAndMigrateDatabase();
 
-        Model.initialiseModel();
+        try
+        {
+            Model.initialiseModel();
+        }
+        catch (SQLException e)
+        {
+            System.err.println(e.getMessage());
+
+            //One of the initialisation methods failed. Try again
+            Model.clearModel();
+
+            try
+            {
+                Model.initialiseModel();
+            }
+            catch (SQLException ex)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR); //TODO: Check this works as it might throw an exception as the window is shown on the main FX Launcher thread
+                alert.show();
+                System.err.println(ex.getMessage());
+            }
+        }
+
         this.model = Model.getModel();
     }
 

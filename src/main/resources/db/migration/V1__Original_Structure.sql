@@ -5,10 +5,18 @@ CREATE TABLE Category
     Budget DECIMAL NOT NULL
 );
 
-CREATE TABLE Transaction
+CREATE TABLE Transactions
 (
     ID INT IDENTITY NOT NULL,
     Name VARCHAR NOT NULL,
     Type ENUM('INCOME', 'EXPENDITURE'),
-    Amount DECIMAL
+    Amount DECIMAL NOT NULL
+);
+
+CREATE TABLE Account
+(
+    ID INT IDENTITY NOT NULL,
+    Name VARCHAR NOT NULL,
+    Type ENUM('DEBIT', 'CREDIT', 'SAVINGS'),
+    StartingBalance DECIMAL NOT NULL
 );

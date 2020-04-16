@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public class Category
 {
-	private SimpleIntegerProperty id;
+	private int id;
 	private SimpleStringProperty name;
 	private SimpleObjectProperty<BigDecimal> budget;
 	private SimpleObjectProperty<BigDecimal> totalSpend;
@@ -16,9 +16,9 @@ public class Category
 		this(-1, name, new BigDecimal(0));
 	}
 
-	public Category(int id, String name, BigDecimal budget)
+	public Category(int theId, String name, BigDecimal budget)
 	{
-		this.id = new SimpleIntegerProperty(id);
+		this.id = theId;
 		this.name = new SimpleStringProperty(name);
 		this.totalSpend = new SimpleObjectProperty<>(new BigDecimal(0));
 		this.budget = new SimpleObjectProperty<>(budget);
@@ -26,7 +26,7 @@ public class Category
 
 	public Category(Category category)
 	{
-		this.id = new SimpleIntegerProperty(category.id.get());
+		this.id = category.getId();
 		this.name = new SimpleStringProperty(category.name.get());
 		this.budget = new SimpleObjectProperty<>(category.budget.get());
 		this.totalSpend = new SimpleObjectProperty<>(category.totalSpend.get());
@@ -34,17 +34,12 @@ public class Category
 
 	public int getId()
 	{
-		return this.id.get();
-	}
-
-	public void setId(int id)
-	{
-		this.id.set(id);
-	}
-
-	public SimpleIntegerProperty getIdProperty()
-	{
 		return this.id;
+	}
+
+	public void setId(int newId)
+	{
+		this.id = newId;
 	}
 
 	public String getName()
@@ -57,7 +52,7 @@ public class Category
 		this.name.set(name);
 	}
 
-	public SimpleStringProperty getNameProperty()
+	public SimpleStringProperty nameProperty()
 	{
 		return this.name;
 	}
@@ -72,7 +67,7 @@ public class Category
 		this.budget.setValue(budget);
 	}
 
-	public SimpleObjectProperty<BigDecimal> getBudgetProperty()
+	public SimpleObjectProperty<BigDecimal> budgetProperty()
 	{
 		return this.budget;
 	}
@@ -87,7 +82,7 @@ public class Category
 		this.totalSpend.setValue(totalSpend);
 	}
 
-	public SimpleObjectProperty<BigDecimal> getTotalSpendProperty()
+	public SimpleObjectProperty<BigDecimal> totalSpendProperty()
 	{
 		return this.totalSpend;
 	}

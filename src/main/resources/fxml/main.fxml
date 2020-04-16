@@ -16,5 +16,8 @@
     <Tab fx:id="categoriesTab" text="Categories" closable="false">
         <fx:include source="categories.fxml"/>
     </Tab>
+    <Tab fx:id="accountTab" text="Accounts" closable="false">
+        <fx:include source="accounts.fxml" />
+    </Tab>
 
 </TabPane>

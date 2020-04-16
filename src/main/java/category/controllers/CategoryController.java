@@ -1,6 +1,5 @@
 package category.controllers;
 
-import category.common.CategoriesCommon;
 import category.models.Category;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
@@ -11,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import main.Model;
+import main.common.AppCommon;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -18,6 +18,7 @@ import java.sql.SQLException;
 public class CategoryController
 {
 	private Model model;
+	private CategoryStorageHandler categoryStorageHandler;
 
 	@FXML private TableView<Category> categoriesTable;
 	@FXML private TableColumn<Category, String> categoryColumn;
@@ -29,6 +30,7 @@ public class CategoryController
 	public CategoryController()
 	{
 		this.model = Model.getModel();
+		this.categoryStorageHandler = new CategoryStorageHandler();
 	}
 
 	public void initialize()
@@ -37,24 +39,19 @@ public class CategoryController
 		this.categoryColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		this.categoryColumn.setOnEditCommit(event ->
 		{
-			try
-			{
-				Category newCategory = new Category(event.getRowValue());
-				newCategory.setName(event.getNewValue());
-
-				CategoryStorageHandler.update(newCategory);
-
-				//Category updated successfully as no exception was thrown
-				this.updateCategory(newCategory);
-			} catch (SQLException e)
-			{
-				System.err.println(e.getMessage());
-			}
-
+			Category categoryToUpdate = new Category(event.getRowValue());
+			categoryToUpdate.setName(event.getNewValue());
+			this.updateCategory(categoryToUpdate);
 		});
 
 		this.budgetColumn.setCellValueFactory(new PropertyValueFactory<>("budget"));
-		this.budgetColumn.setCellFactory(TextFieldTableCell.forTableColumn(CategoriesCommon.bigDecimalStringConverter));
+		this.budgetColumn.setCellFactory(TextFieldTableCell.forTableColumn(AppCommon.bigDecimalStringConverter));
+		this.budgetColumn.setOnEditCommit(event ->
+		{
+			Category categoryToUpdate = new Category(event.getRowValue());
+			categoryToUpdate.setBudget(event.getNewValue());
+			this.updateCategory(categoryToUpdate);
+		});
 
 		this.deleteColumn.setCellValueFactory(param ->
 		{
@@ -62,18 +59,8 @@ public class CategoryController
 			rowButton.setUserData(param.getValue());
 			rowButton.setOnAction(e ->
 			{
-				try
-				{
-					Category deleteCategory = (Category) ((Button) e.getSource()).getUserData();
-					CategoryStorageHandler.delete(deleteCategory);
-
-					//Category updated successfully as no exception was thrown
-					this.deleteCategory(deleteCategory);
-
-				} catch (SQLException ex)
-				{
-					System.err.println(ex.getMessage());
-				}
+				Category toDelete = (Category) ((Button) e.getSource()).getUserData();
+				this.deleteCategory(toDelete);
 			});
 
 			return new ReadOnlyObjectWrapper<>(rowButton);
@@ -88,21 +75,38 @@ public class CategoryController
 		this.addNewCategorySidebar.setVisible(true);
 	}
 
-	private void updateCategory(Category updateCategory)
+	private void updateCategory(Category categoryToUpdate)
 	{
-		for (Category modelCategory : this.model.getCategories())
+		try
 		{
-			if (modelCategory.getId() == updateCategory.getId())
+			this.categoryStorageHandler.update(categoryToUpdate);
+
+			for (Category modelCategory : this.model.getCategories())
 			{
-				modelCategory.setName(updateCategory.getName());
-				modelCategory.setBudget(updateCategory.getBudget());
+				if (modelCategory.getId() == categoryToUpdate.getId())
+				{
+					modelCategory.setName(categoryToUpdate.getName());
+					modelCategory.setBudget(categoryToUpdate.getBudget());
+				}
 			}
+		}
+		catch (SQLException e)
+		{
+			System.err.println(e.getMessage()); //TODO: Better error message
 		}
 	}
 
-	private void deleteCategory(Category deleteCategory)
+	private void deleteCategory(Category categoryToDelete)
 	{
-		this.model.getCategories().remove(deleteCategory);
+		try
+		{
+			this.categoryStorageHandler.delete(categoryToDelete);
+			this.model.getCategories().remove(categoryToDelete);
+		}
+		catch (SQLException e)
+		{
+			System.err.println(e.getMessage());
+		}
 	}
 
 }

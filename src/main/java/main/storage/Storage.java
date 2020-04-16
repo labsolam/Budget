@@ -1,4 +1,4 @@
-package storage;
+package main.storage;
 
 import org.flywaydb.core.Flyway;
 import org.h2.tools.Server;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class Storage
 {
 	private static final String DATABASE_LOCATION = "jdbc:h2:tcp://localhost/~/temp/.BudgetDb"; //TODO: Check this works on windows, make directory hidden
-	//	private static final String DATABASE_LOCATION = "jdbc:h2:~/temp/.BudgetDb";
+//		private static final String DATABASE_LOCATION = "jdbc:h2:~/temp/.BudgetDb";
 	private static final String USERNAME = "";
 	private static final String PASSWORD = "";
 
@@ -38,7 +38,7 @@ public class Storage
 	 * Migrate the database to the latest version.
 	 *
 	 * Note, a H2 database is automatically created if one doesn't exist. Hence, "create"AndMigrate.
-	 * Only true if using an embedded database. Other you have to make your own.
+	 * Only true if using an embedded database. Otherwise you have to make your own.
 	 */
 	public void createAndMigrateDatabase()
 	{
