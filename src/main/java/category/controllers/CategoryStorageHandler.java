@@ -1,6 +1,7 @@
 package category.controllers;
 
 import category.models.Category;
+import main.baseClasses.AbstractStorageHandler;
 import main.storage.Storage;
 
 import java.math.BigDecimal;
@@ -11,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryStorageHandler
+public class CategoryStorageHandler extends AbstractStorageHandler<Category>
 {
 	private static final String GET_ALL_CATEGORIES_SQL = "SELECT * FROM Category";
 	private static final String NEW_CATEGORY_SQL = "INSERT INTO Category (NAME, BUDGET) VALUES ( ?, ? ) ";

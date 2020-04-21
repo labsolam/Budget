@@ -1,12 +1,12 @@
 package category.models;
 
 import javafx.beans.property.*;
+import main.baseClasses.AbstractModel;
 
 import java.math.BigDecimal;
 
-public class Category
+public class Category extends AbstractModel<Category>
 {
-	private int id;
 	private SimpleStringProperty name;
 	private SimpleObjectProperty<BigDecimal> budget;
 	private SimpleObjectProperty<BigDecimal> totalSpend;
@@ -16,9 +16,9 @@ public class Category
 		this(-1, name, new BigDecimal(0));
 	}
 
-	public Category(int theId, String name, BigDecimal budget)
+	public Category(int id, String name, BigDecimal budget)
 	{
-		this.id = theId;
+		super(id);
 		this.name = new SimpleStringProperty(name);
 		this.totalSpend = new SimpleObjectProperty<>(new BigDecimal(0));
 		this.budget = new SimpleObjectProperty<>(budget);
@@ -26,20 +26,10 @@ public class Category
 
 	public Category(Category category)
 	{
-		this.id = category.getId();
+		super(category);
 		this.name = new SimpleStringProperty(category.name.get());
 		this.budget = new SimpleObjectProperty<>(category.budget.get());
 		this.totalSpend = new SimpleObjectProperty<>(category.totalSpend.get());
-	}
-
-	public int getId()
-	{
-		return this.id;
-	}
-
-	public void setId(int newId)
-	{
-		this.id = newId;
 	}
 
 	public String getName()

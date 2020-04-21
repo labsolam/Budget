@@ -67,7 +67,7 @@ public class AccountStorageHandler
 		}
 	}
 
-	public void updateAccount(Account account) throws SQLException
+	public void update(Account account) throws SQLException
 	{
 		PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(UPDATE_ACCOUNT_SQL);
 		preparedStatement.setString(1, account.getName());
@@ -83,7 +83,7 @@ public class AccountStorageHandler
 		}
 	}
 
-	public void deleteAccount(Account account) throws SQLException
+	public void delete(Account account) throws SQLException
 	{
 		PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(DELETE_ACCOUNT_SQL);
 		preparedStatement.setInt(1, account.getId());
