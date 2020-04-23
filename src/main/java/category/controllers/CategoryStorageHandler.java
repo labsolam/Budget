@@ -29,8 +29,8 @@ public class CategoryStorageHandler
 
 		try
 		(
-				PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(GET_ALL_CATEGORIES_SQL);
-				ResultSet result = preparedStatement.executeQuery();
+			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(GET_ALL_CATEGORIES_SQL);
+			ResultSet result = preparedStatement.executeQuery()
 		)
 		{
 			while (result.next())
@@ -44,47 +44,62 @@ public class CategoryStorageHandler
 
 	public int create(String categoryName, BigDecimal budget) throws SQLException
 	{
-		PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(NEW_CATEGORY_SQL, Statement.RETURN_GENERATED_KEYS);
-
-		preparedStatement.setString(1, categoryName);
-		preparedStatement.setBigDecimal(2, budget);
-		preparedStatement.executeUpdate();
-
-		if (preparedStatement.getGeneratedKeys().next())
+		try
+		(
+			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(NEW_CATEGORY_SQL,
+				Statement.RETURN_GENERATED_KEYS)
+		)
 		{
-			return preparedStatement.getGeneratedKeys().getInt(1);
-		}
-		else
-		{
-			throw new SQLException(); //TODO: Query failed if there aren't any keys
-		}
-	}
+			preparedStatement.setString(1, categoryName);
+			preparedStatement.setBigDecimal(2, budget);
+			preparedStatement.executeUpdate();
 
-	public void delete(Category category) throws SQLException
-	{
-		PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(DELETE_CATEGORY_SQL);
-		preparedStatement.setInt(1, category.getId());
-
-		int rowsDeleted = preparedStatement.executeUpdate();
-
-		if (rowsDeleted != 1)
-		{
-			throw new SQLException("Failed to delete category!"); //TODO: Find a better exception and/or message
+			if (preparedStatement.getGeneratedKeys().next())
+			{
+				return preparedStatement.getGeneratedKeys().getInt(1);
+			}
+			else
+			{
+				throw new SQLException("Failed to create category!");
+			}
 		}
 	}
 
 	public void update(Category category) throws SQLException
 	{
-		PreparedStatement statement = Storage.getConnection().prepareStatement(UPDATE_CATEGORY_SQL);
-		statement.setString(1, category.getName());
-		statement.setBigDecimal(2, category.getBudget());
-		statement.setInt(3, category.getId());
-
-		int rowsModified = statement.executeUpdate();
-
-		if (rowsModified == 0)
+		try
+		(
+			PreparedStatement statement = Storage.getConnection().prepareStatement(UPDATE_CATEGORY_SQL)
+		)
 		{
-			throw new SQLException("Failed to update category!"); //TODO: Find a better exception and/or message
+			statement.setString(1, category.getName());
+			statement.setBigDecimal(2, category.getBudget());
+			statement.setInt(3, category.getId());
+
+			int rowsModified = statement.executeUpdate();
+
+			if (rowsModified == 0)
+			{
+				throw new SQLException("Failed to update category!");
+			}
+		}
+	}
+
+	public void delete(Category category) throws SQLException
+	{
+		try
+		(
+			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(DELETE_CATEGORY_SQL)
+		)
+		{
+			preparedStatement.setInt(1, category.getId());
+
+			int rowsDeleted = preparedStatement.executeUpdate();
+
+			if (rowsDeleted != 1)
+			{
+				throw new SQLException("Failed to delete category!");
+			}
 		}
 	}
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
+<?import java.net.URL?>
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="label.controllers.LabelController"
+           alignment="TOP_LEFT">
+
+    <stylesheets>
+        <URL value="@/css/generic.css"/>
+    </stylesheets>
+
+    <VBox>
+        <Button onAction="#openNewLabelSidebar">Add Label</Button>
+
+        <TableView fx:id="labelsTable" editable="true">
+            <columns>
+                <TableColumn fx:id="labelColumn" text="Category"/>
+                <TableColumn fx:id="deleteColumn" text="Delete"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <VBox fx:id="addNewLabelSidebar" visible="false" styleClass="hiddenDrawer"
+          StackPane.alignment="TOP_RIGHT"
+          maxHeight="Infinity" maxWidth="300" alignment="TOP_RIGHT">
+        <fx:include source="newLabel.fxml"/>
+    </VBox>
+
+</StackPane>

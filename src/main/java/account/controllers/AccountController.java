@@ -11,7 +11,6 @@ import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import main.Model;
 import main.common.AppCommon;
 
@@ -91,7 +90,7 @@ public class AccountController
 	{
 		try
 		{
-			this.accountStorageHandler.updateAccount(accountToUpdate);
+			this.accountStorageHandler.update(accountToUpdate);
 
 			for (Account accounts : this.model.getAccounts())
 			{
@@ -113,7 +112,7 @@ public class AccountController
 	{
 		try
 		{
-			this.accountStorageHandler.deleteAccount(accountToDelete);
+			this.accountStorageHandler.delete(accountToDelete);
 			this.model.getAccounts().remove(accountToDelete);
 		}
 		catch (SQLException e)

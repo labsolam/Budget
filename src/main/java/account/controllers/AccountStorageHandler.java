@@ -2,7 +2,6 @@ package account.controllers;
 
 import account.models.Account;
 import account.models.AccountTypeEnum;
-import main.Model;
 import main.storage.Storage;
 
 import java.math.BigDecimal;
@@ -15,8 +14,6 @@ import java.util.List;
 
 public class AccountStorageHandler
 {
-	private Model model;
-
 	private static final String LOAD_ACCOUNT_DATA_SQL = "SELECT * FROM ACCOUNT";
 	private static final String CREATE_ACCOUNT_SQL = "INSERT INTO ACCOUNT(Name, Type, StartingBalance) VALUES (?, ?, ?)";
 	private static final String UPDATE_ACCOUNT_SQL = "UPDATE ACCOUNT SET Name = ?, Type = ?, StartingBalance = ? WHERE ID = ?";
@@ -24,7 +21,6 @@ public class AccountStorageHandler
 
 	public AccountStorageHandler()
 	{
-		this.model = Model.getModel();
 	}
 
 	public List<Account> loadData() throws SQLException
@@ -33,8 +29,8 @@ public class AccountStorageHandler
 
 		try
 		(
-				PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(LOAD_ACCOUNT_DATA_SQL);
-				ResultSet results = preparedStatement.executeQuery();
+			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(LOAD_ACCOUNT_DATA_SQL);
+			ResultSet results = preparedStatement.executeQuery()
 		)
 		{
 			while (results.next())
@@ -49,50 +45,63 @@ public class AccountStorageHandler
 
 	public int create(String name, AccountTypeEnum type, BigDecimal startingBalance) throws SQLException
 	{
-		PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(CREATE_ACCOUNT_SQL,
-				Statement.RETURN_GENERATED_KEYS);
-
-		preparedStatement.setString(1, name);
-		preparedStatement.setString(2, type.toString());
-		preparedStatement.setBigDecimal(3, startingBalance);
-		preparedStatement.executeUpdate();
-
-		if (preparedStatement.getGeneratedKeys().next())
+		try
+		(
+			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(CREATE_ACCOUNT_SQL,
+				Statement.RETURN_GENERATED_KEYS)
+		)
 		{
-			return preparedStatement.getGeneratedKeys().getInt(1);
-		}
-		else
-		{
-			throw new SQLException(); //TODO: Query failed if there aren't any keys
-		}
-	}
+			preparedStatement.setString(1, name);
+			preparedStatement.setString(2, type.toString());
+			preparedStatement.setBigDecimal(3, startingBalance);
+			preparedStatement.executeUpdate();
 
-	public void updateAccount(Account account) throws SQLException
-	{
-		PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(UPDATE_ACCOUNT_SQL);
-		preparedStatement.setString(1, account.getName());
-		preparedStatement.setString(2, account.getType().toString());
-		preparedStatement.setBigDecimal(3, account.getStartingBalance());
-		preparedStatement.setInt(4, account.getId());
-
-		int rowsModified = preparedStatement.executeUpdate();
-
-		if (rowsModified != 1)
-		{
-			throw new SQLException("Failed to update account!"); //TODO: Find a better exception and/or message
+			if (preparedStatement.getGeneratedKeys().next())
+			{
+				return preparedStatement.getGeneratedKeys().getInt(1);
+			} else
+			{
+				throw new SQLException("Failed to create account!");
+			}
 		}
 	}
 
-	public void deleteAccount(Account account) throws SQLException
+	public void update(Account account) throws SQLException
 	{
-		PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(DELETE_ACCOUNT_SQL);
-		preparedStatement.setInt(1, account.getId());
-
-		int modifiedRows = preparedStatement.executeUpdate();
-
-		if (modifiedRows != 1)
+		try
+		(
+			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(UPDATE_ACCOUNT_SQL)
+		)
 		{
-			throw new SQLException("Failed to delete account!"); //TODO: Find a better exception and/or message
+			preparedStatement.setString(1, account.getName());
+			preparedStatement.setString(2, account.getType().toString());
+			preparedStatement.setBigDecimal(3, account.getStartingBalance());
+			preparedStatement.setInt(4, account.getId());
+
+			int rowsModified = preparedStatement.executeUpdate();
+
+			if (rowsModified != 1)
+			{
+				throw new SQLException("Failed to update account!");
+			}
+		}
+	}
+
+	public void delete(Account account) throws SQLException
+	{
+		try
+		(
+			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(DELETE_ACCOUNT_SQL)
+		)
+		{
+			preparedStatement.setInt(1, account.getId());
+
+			int rowsDeleted = preparedStatement.executeUpdate();
+
+			if (rowsDeleted != 1)
+			{
+				throw new SQLException("Failed to delete account!");
+			}
 		}
 	}
 }

@@ -7,9 +7,9 @@ import java.math.BigDecimal;
 public class Category
 {
 	private int id;
-	private SimpleStringProperty name;
-	private SimpleObjectProperty<BigDecimal> budget;
-	private SimpleObjectProperty<BigDecimal> totalSpend;
+	final private SimpleStringProperty name;
+	final private SimpleObjectProperty<BigDecimal> budget;
+	final private SimpleObjectProperty<BigDecimal> totalSpend;
 
 	public Category(String name)
 	{

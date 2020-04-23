@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Label
 {
 	private int id;
-	private SimpleStringProperty name;
+	final private SimpleStringProperty name;
 
 	public Label(int id, String name)
 	{

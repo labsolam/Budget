@@ -79,12 +79,12 @@ public class NewCategoryController
 	@FXML
 	private void closeCreateCategory()
 	{
+		this.newCategorySidebar.getParent().setVisible(false);
 		this.failedToCreateCategoryErrorLabel.setVisible(false);
 		this.categoryExistsErrorLabel.setVisible(false);
 		this.categoryNameInvalidLabel.setVisible(false);
-		this.newCategorySidebar.getParent().setVisible(false);
-		this.categoryNameTextBox.setText("");
-		this.categoryBudgetTextBox.setText("");
+		this.categoryNameTextBox.setText(null);
+		this.categoryBudgetTextBox.setText(null);
 	}
 
 	/**

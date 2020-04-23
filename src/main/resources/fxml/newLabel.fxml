@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<VBox fx:id="newLabelSidebar" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="label.controllers.NewLabelController" >
+
+    <stylesheets>
+        <URL value="@../css/generic.css"/>
+    </stylesheets>
+
+    <Label styleClass="header">Label</Label>
+
+    <Label>Name</Label>
+    <TextField fx:id="newLabelName" promptText="New label name" />
+
+    <Button onAction="#createNewLabel">Create</Button>
+    <Button onAction="#cancelCreateLabel">Cancel</Button>
+
+    <Label fx:id="labelExistsErrorLabel" visible="false" styleClass="errorMessage">
+        Label already exists!
+    </Label>
+    <Label fx:id="failedToCreateLabelErrorLabel" visible="false" styleClass="errorMessage">
+        Failed to create label
+    </Label>
+    <Label fx:id="labelNameInvalidLabel" visible="false" styleClass="errorMessage">
+        Invalid label name
+    </Label>
+
+</VBox>

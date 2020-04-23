@@ -87,13 +87,13 @@ public class NewAccountController
 	@FXML
 	private void closeCreateAccount()
 	{
-		this.accountNameTextBox.setText("");
-		this.accountTypeComboBox.getSelectionModel().select(AccountTypeEnum.DEBIT);
 		this.newAccountSidebar.getParent().setVisible(false);
 		this.accountExistsErrorLabel.setVisible(false);
 		this.failedToCreateAccountErrorLabel.setVisible(false);
 		this.accountNameInvalidLabel.setVisible(false);
-		startingBalanceTextBox.setText("");
+		this.startingBalanceTextBox.setText(null);
+		this.accountNameTextBox.setText(null);
+		this.accountTypeComboBox.getSelectionModel().select(AccountTypeEnum.DEBIT);
 	}
 
 	private boolean isNameValid(String name)
