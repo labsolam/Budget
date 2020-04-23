@@ -89,26 +89,19 @@ public class Account
 	}
 
 	@Override
-	public int hashCode()
+	public boolean equals(Object obj)
 	{
-		return this.name.hashCode();
+		if (obj == this) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+
+		final Account account = (Account) obj;
+
+		return getName().equals(account.getName());
 	}
 
 	@Override
-	public boolean equals(Object obj)
+	public int hashCode()
 	{
-		if (obj == this)
-		{
-			return true;
-		}
-
-		if (!(obj instanceof Account))
-		{
-			return false;
-		}
-
-		final Account comparedObj = (Account) obj;
-
-		return comparedObj.getName().equals(this.getName());
+		return getName().hashCode();
 	}
 }
