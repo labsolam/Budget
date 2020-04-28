@@ -26,8 +26,8 @@ public class NewAccountController
 	@FXML ComboBox<AccountTypeEnum> accountTypeComboBox;
 	@FXML TextField startingBalanceTextBox;
 
-	private Model model;
-	private AccountStorageHandler accountStorageHandler;
+	final private Model model;
+	final private AccountStorageHandler accountStorageHandler;
 
 	public NewAccountController()
 	{
@@ -47,13 +47,13 @@ public class NewAccountController
 	@FXML
 	private void createAccount()
 	{
-		if (this.doesAccountExist(this.accountNameTextBox.getText()))
+		if (AccountController.doesAccountExist(this.accountNameTextBox.getText()))
 		{
 			this.accountExistsErrorLabel.setVisible(true);
 		}
 		else
 		{
-			if (this.isNameValid(this.accountNameTextBox.getText()))
+			if (AccountController.isNameValid(this.accountNameTextBox.getText()))
 			{
 				try
 				{
@@ -94,20 +94,5 @@ public class NewAccountController
 		this.startingBalanceTextBox.setText(null);
 		this.accountNameTextBox.setText(null);
 		this.accountTypeComboBox.getSelectionModel().select(AccountTypeEnum.DEBIT);
-	}
-
-	private boolean isNameValid(String name)
-	{
-		if (name == null)
-		{
-			return false;
-		}
-
-		return !name.isBlank();
-	}
-
-	private boolean doesAccountExist(String name)
-	{
-		return this.model.getAccounts().stream().anyMatch(a -> a.getName().equals(name));
 	}
 }

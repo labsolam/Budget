@@ -17,8 +17,7 @@ import java.sql.SQLException;
 
 public class CategoryController
 {
-	private Model model;
-	private CategoryStorageHandler categoryStorageHandler;
+	final private CategoryStorageHandler categoryStorageHandler;
 
 	@FXML private TableView<Category> categoriesTable;
 	@FXML private TableColumn<Category, String> categoryColumn;
@@ -29,13 +28,12 @@ public class CategoryController
 
 	public CategoryController()
 	{
-		this.model = Model.getModel();
 		this.categoryStorageHandler = new CategoryStorageHandler();
 	}
 
 	public void initialize()
 	{
-		this.categoryColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+		this.categoryColumn.setCellValueFactory(c -> c.getValue().nameProperty());
 		this.categoryColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		this.categoryColumn.setOnEditCommit(event ->
 		{
@@ -44,7 +42,7 @@ public class CategoryController
 			this.updateCategory(categoryToUpdate);
 		});
 
-		this.budgetColumn.setCellValueFactory(new PropertyValueFactory<>("budget"));
+		this.budgetColumn.setCellValueFactory(c -> c.getValue().budgetProperty());
 		this.budgetColumn.setCellFactory(TextFieldTableCell.forTableColumn(AppCommon.bigDecimalStringConverter));
 		this.budgetColumn.setOnEditCommit(event ->
 		{
@@ -66,7 +64,7 @@ public class CategoryController
 			return new ReadOnlyObjectWrapper<>(rowButton);
 		});
 
-		this.categoriesTable.setItems(this.model.getCategories());
+		this.categoriesTable.setItems(Model.getModel().getCategories());
 	}
 
 	@FXML
@@ -77,22 +75,32 @@ public class CategoryController
 
 	private void updateCategory(Category categoryToUpdate)
 	{
-		try
+		if (doesCategoryExist(categoryToUpdate.getName()))
 		{
-			this.categoryStorageHandler.update(categoryToUpdate);
-
-			for (Category modelCategory : this.model.getCategories())
+			//TODO Category Exists error
+		}
+		else if (isNameValid(categoryToUpdate.getName()))
+		{
+			try
 			{
-				if (modelCategory.getId() == categoryToUpdate.getId())
+				this.categoryStorageHandler.update(categoryToUpdate);
+
+				for (Category modelCategory : Model.getModel().getCategories())
 				{
-					modelCategory.setName(categoryToUpdate.getName());
-					modelCategory.setBudget(categoryToUpdate.getBudget());
+					if (modelCategory.getId() == categoryToUpdate.getId())
+					{
+						modelCategory.setName(categoryToUpdate.getName());
+						modelCategory.setBudget(categoryToUpdate.getBudget());
+					}
 				}
+			} catch (SQLException e)
+			{
+				System.err.println(e.getMessage()); //TODO: Better error message
 			}
 		}
-		catch (SQLException e)
+		else
 		{
-			System.err.println(e.getMessage()); //TODO: Better error message
+			//TODO: Name not valid
 		}
 	}
 
@@ -101,12 +109,26 @@ public class CategoryController
 		try
 		{
 			this.categoryStorageHandler.delete(categoryToDelete);
-			this.model.getCategories().remove(categoryToDelete);
-		}
-		catch (SQLException e)
+			Model.getModel().getCategories().remove(categoryToDelete);
+		} catch (SQLException e)
 		{
 			System.err.println(e.getMessage());
 		}
+	}
+
+	static boolean isNameValid(String name)
+	{
+		if (name == null)
+		{
+			return false;
+		}
+
+		return !name.isBlank();
+	}
+
+	static boolean doesCategoryExist(String name)
+	{
+		return Model.getModel().getCategories().stream().anyMatch(a -> a.getName().equals(name));
 	}
 
 }

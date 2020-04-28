@@ -19,8 +19,8 @@ import java.sql.SQLException;
 
 public class AccountController
 {
-	private Model model;
-	private AccountStorageHandler accountStorageHandler;
+	final private Model model;
+	final private AccountStorageHandler accountStorageHandler;
 
 	@FXML TableView<Account> accountTable;
 	@FXML TableColumn<Account, String> accountColumn;
@@ -37,7 +37,7 @@ public class AccountController
 
 	public void initialize()
 	{
-		this.accountColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+		this.accountColumn.setCellValueFactory(c ->  c.getValue().nameProperty());
 		this.accountColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		this.accountColumn.setOnEditCommit(e ->
 		{
@@ -46,7 +46,7 @@ public class AccountController
 			this.updateAccount(accountToUpdate);
 		});
 
-		this.typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+		this.typeColumn.setCellValueFactory(c -> c.getValue().typeProperty());
 		this.typeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(AccountTypeEnum.values()));
 		this.typeColumn.setOnEditCommit(e ->
 		{
@@ -55,7 +55,7 @@ public class AccountController
 			this.updateAccount(accountToUpdate);
 		}); //TODO: Item isn't selected when double clicking the combo box. The first item is empty. It should be the currently selected item
 
-		this.startingBalanceColumn.setCellValueFactory(new PropertyValueFactory<>("startingBalance"));
+		this.startingBalanceColumn.setCellValueFactory(c -> c.getValue().startingBalanceProperty());
 		this.startingBalanceColumn.setCellFactory(TextFieldTableCell.forTableColumn(AppCommon.bigDecimalStringConverter));
 		this.startingBalanceColumn.setOnEditCommit(e ->
 		{
@@ -88,23 +88,34 @@ public class AccountController
 
 	private void updateAccount(Account accountToUpdate)
 	{
-		try
+		if (doesAccountExist(accountToUpdate.getName()))
 		{
-			this.accountStorageHandler.update(accountToUpdate);
-
-			for (Account accounts : this.model.getAccounts())
+			//TODO Account exists
+		}
+		else if (isNameValid(accountToUpdate.getName()))
+		{
+			try
 			{
-				if (accounts.getId() == accountToUpdate.getId())
+				this.accountStorageHandler.update(accountToUpdate);
+
+				for (Account accounts : this.model.getAccounts())
 				{
-					accounts.setName(accountToUpdate.getName());
-					accounts.setType(accountToUpdate.getType());
-					accounts.setStartingBalance(accountToUpdate.getStartingBalance());
+					if (accounts.getId() == accountToUpdate.getId())
+					{
+						accounts.setName(accountToUpdate.getName());
+						accounts.setType(accountToUpdate.getType());
+						accounts.setStartingBalance(accountToUpdate.getStartingBalance());
+					}
 				}
 			}
+			catch (SQLException e)
+			{
+				System.err.println(e.getMessage());
+			}
 		}
-		catch (SQLException e)
+		else
 		{
-			System.err.println(e.getMessage());
+			//TODO Account name is not valid
 		}
 	}
 
@@ -119,6 +130,21 @@ public class AccountController
 		{
 			System.err.println(e.getMessage());
 		}
+	}
+
+	static boolean isNameValid(String name)
+	{
+		if (name == null)
+		{
+			return false;
+		}
+
+		return !name.isBlank();
+	}
+
+	static boolean doesAccountExist(String name)
+	{
+		return Model.getModel().getAccounts().stream().anyMatch(a -> a.getName().equals(name));
 	}
 
 }

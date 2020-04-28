@@ -21,8 +21,8 @@ public class NewCategoryController
 	@FXML private TextField categoryBudgetTextBox;
 	@FXML private VBox newCategorySidebar;
 
-	private Model model;
-	private CategoryStorageHandler categoryStorageHandler;
+	final private Model model;
+	final private CategoryStorageHandler categoryStorageHandler;
 
 	public NewCategoryController()
 	{
@@ -39,35 +39,30 @@ public class NewCategoryController
 	@FXML
 	private void createCategory()
 	{
-		if (this.doesCategoryExist(this.categoryNameTextBox.getText()))
+		if (CategoryController.doesCategoryExist(this.categoryNameTextBox.getText()))
 		{
 			this.categoryExistsErrorLabel.setVisible(true);
 		}
+		else if (CategoryController.isNameValid(this.categoryNameTextBox.getText()))
+		{
+			try
+			{
+				int id = this.categoryStorageHandler.create(this.categoryNameTextBox.getText(),
+						new BigDecimal(this.categoryBudgetTextBox.getText()));
+
+				this.addCategoryToModel(new Category(id, this.categoryNameTextBox.getText(),
+						new BigDecimal(this.categoryBudgetTextBox.getText()))); //TODO: Find a better way to do the conversion. Possibly with the TextFormatter? Seems to have a string converter.
+
+				this.closeCreateCategory();
+			} catch (SQLException e)
+			{
+				System.err.println(e.getMessage()); //TODO: Write an exception better than this
+				this.failedToCreateCategoryErrorLabel.setVisible(true);
+			}
+		}
 		else
 		{
-			if(isNameValid(this.categoryNameTextBox.getText()))
-			{
-				try
-				{
-					int newCategoryId = this.categoryStorageHandler.create(this.categoryNameTextBox.getText(),
-							new BigDecimal(this.categoryBudgetTextBox.getText()));
-
-					this.addCategoryToModel(new Category(newCategoryId, this.categoryNameTextBox.getText(),
-							new BigDecimal(this.categoryBudgetTextBox.getText()))); //TODO: Find a better way to do the conversion. Possibly with the TextFormatter? Seems to have a string converter.
-
-					this.closeCreateCategory();
-				}
-				catch (SQLException e)
-				{
-					System.err.println(e.getMessage()); //TODO: Write an exception better than this
-					this.failedToCreateCategoryErrorLabel.setVisible(true);
-				}
-			}
-			else
-			{
-				//Name is not valid
-				this.categoryNameInvalidLabel.setVisible(true);
-			}
+			this.categoryNameInvalidLabel.setVisible(true);
 		}
 	}
 
@@ -86,26 +81,4 @@ public class NewCategoryController
 		this.categoryNameTextBox.setText(null);
 		this.categoryBudgetTextBox.setText(null);
 	}
-
-	/**
-	 * Validates the category name.
-	 *
-	 * @param name Name of the category.
-	 * @return True if the name is valid. False otherwise.
-	 */
-	private boolean isNameValid(String name)
-	{
-		if (name == null)
-		{
-			return false;
-		}
-
-		return !name.isBlank();
-	}
-
-	private boolean doesCategoryExist(String name)
-	{
-		return this.model.getCategories().stream().anyMatch(a -> a.getName().equals(name));
-	}
-
 }

@@ -8,14 +8,9 @@ import java.math.BigDecimal;
 public class Account
 {
 	private int id;
-	private SimpleStringProperty name;
-	private SimpleObjectProperty<AccountTypeEnum> type;
-	private SimpleObjectProperty<BigDecimal> startingBalance;
-
-	public Account(String name)
-	{
-		this(-1, name, AccountTypeEnum.DEBIT, new BigDecimal(0));
-	}
+	final private SimpleStringProperty name;
+	final private SimpleObjectProperty<AccountTypeEnum> type;
+	final private SimpleObjectProperty<BigDecimal> startingBalance;
 
 	public Account(int id, String name, AccountTypeEnum type, BigDecimal startingBalance)
 	{

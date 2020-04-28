@@ -11,11 +11,6 @@ public class Category
 	final private SimpleObjectProperty<BigDecimal> budget;
 	final private SimpleObjectProperty<BigDecimal> totalSpend;
 
-	public Category(String name)
-	{
-		this(-1, name, new BigDecimal(0));
-	}
-
 	public Category(int theId, String name, BigDecimal budget)
 	{
 		this.id = theId;
@@ -27,9 +22,9 @@ public class Category
 	public Category(Category category)
 	{
 		this.id = category.getId();
-		this.name = new SimpleStringProperty(category.name.get());
-		this.budget = new SimpleObjectProperty<>(category.budget.get());
-		this.totalSpend = new SimpleObjectProperty<>(category.totalSpend.get());
+		this.name = new SimpleStringProperty(category.getName());
+		this.budget = new SimpleObjectProperty<>(category.getBudget());
+		this.totalSpend = new SimpleObjectProperty<>(category.getTotalSpend());
 	}
 
 	public int getId()

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class AccountStorageHandler
 {
-	private static final String LOAD_ACCOUNT_DATA_SQL = "SELECT * FROM ACCOUNT";
+	private static final String LOAD_ACCOUNTS_SQL = "SELECT * FROM ACCOUNT";
 	private static final String CREATE_ACCOUNT_SQL = "INSERT INTO ACCOUNT(Name, Type, StartingBalance) VALUES (?, ?, ?)";
 	private static final String UPDATE_ACCOUNT_SQL = "UPDATE ACCOUNT SET Name = ?, Type = ?, StartingBalance = ? WHERE ID = ?";
 	private static final String DELETE_ACCOUNT_SQL = "DELETE FROM ACCOUNT WHERE ID = ?";
@@ -29,8 +29,8 @@ public class AccountStorageHandler
 
 		try
 		(
-			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(LOAD_ACCOUNT_DATA_SQL);
-			ResultSet results = preparedStatement.executeQuery()
+				PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(LOAD_ACCOUNTS_SQL);
+				ResultSet results = preparedStatement.executeQuery()
 		)
 		{
 			while (results.next())

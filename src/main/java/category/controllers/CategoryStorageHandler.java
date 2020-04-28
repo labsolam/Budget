@@ -13,8 +13,8 @@ import java.util.List;
 
 public class CategoryStorageHandler
 {
-	private static final String GET_ALL_CATEGORIES_SQL = "SELECT * FROM Category";
-	private static final String NEW_CATEGORY_SQL = "INSERT INTO Category (NAME, BUDGET) VALUES ( ?, ? ) ";
+	private static final String LOAD_CATEGORIES_SQL = "SELECT * FROM Category";
+	private static final String CREATE_CATEGORY_SQL = "INSERT INTO Category (NAME, BUDGET) VALUES ( ?, ? ) ";
 	private static final String UPDATE_CATEGORY_SQL = "UPDATE Category SET NAME = ?, BUDGET = ? WHERE ID = ?";
 	private static final String DELETE_CATEGORY_SQL = "DELETE FROM Category WHERE ID = ?";
 
@@ -29,7 +29,7 @@ public class CategoryStorageHandler
 
 		try
 		(
-			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(GET_ALL_CATEGORIES_SQL);
+			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(LOAD_CATEGORIES_SQL);
 			ResultSet result = preparedStatement.executeQuery()
 		)
 		{
@@ -46,7 +46,7 @@ public class CategoryStorageHandler
 	{
 		try
 		(
-			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(NEW_CATEGORY_SQL,
+			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(CREATE_CATEGORY_SQL,
 				Statement.RETURN_GENERATED_KEYS)
 		)
 		{
