@@ -12,8 +12,8 @@ import java.util.List;
 
 public class LabelStorageHandler
 {
-	private static final String GET_ALL_LABELS_SQL = "SELECT * FROM Label";
-	private static final String NEW_LABEL_SQL = "INSERT INTO Label (NAME) VALUES ( ? ) ";
+	private static final String LOAD_LABELS_SQL = "SELECT * FROM Label";
+	private static final String CREATE_LABEL_SQL = "INSERT INTO Label (NAME) VALUES ( ? ) ";
 	private static final String UPDATE_LABEL_SQL = "UPDATE Label SET NAME = ? WHERE ID = ?";
 	private static final String DELETE_LABEL_SQL = "DELETE FROM Label WHERE ID = ?";
 
@@ -28,7 +28,7 @@ public class LabelStorageHandler
 
 		try
 		(
-			PreparedStatement preparedStatement  = Storage.getConnection().prepareStatement(GET_ALL_LABELS_SQL);
+			PreparedStatement preparedStatement  = Storage.getConnection().prepareStatement(LOAD_LABELS_SQL);
 			ResultSet result = preparedStatement.executeQuery()
 		)
 		{
@@ -45,7 +45,7 @@ public class LabelStorageHandler
 	{
 		try
 		(
-			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(NEW_LABEL_SQL,
+			PreparedStatement preparedStatement = Storage.getConnection().prepareStatement(CREATE_LABEL_SQL,
 				Statement.RETURN_GENERATED_KEYS)
 		)
 		{

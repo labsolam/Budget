@@ -13,6 +13,12 @@ public class Label
 		this.name = new SimpleStringProperty(name);
 	}
 
+	public Label(Label label)
+	{
+		this.id = label.getId();
+		this.name = new SimpleStringProperty(label.getName());
+	}
+
 	public int getId()
 	{
 		return id;

@@ -2,23 +2,22 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import java.net.URL?>
-<VBox fx:id="newLabelSidebar" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
+
+<VBox fx:id="newLabelSidebar" xmlns:fx="http://javafx.com/fxml"
       fx:controller="label.controllers.NewLabelController" >
 
     <stylesheets>
         <URL value="@../css/generic.css"/>
     </stylesheets>
 
-    <Label styleClass="header">Label</Label>
+    <Label styleClass="header">New Label</Label>
 
     <Label>Name</Label>
     <TextField fx:id="newLabelName" promptText="New label name" />
 
-    <Button onAction="#createNewLabel">Create</Button>
-    <Button onAction="#cancelCreateLabel">Cancel</Button>
+    <Button onAction="#createLabel">Create</Button>
+    <Button onAction="#closeCreateLabel">Cancel</Button>
 
     <Label fx:id="labelExistsErrorLabel" visible="false" styleClass="errorMessage">
         Label already exists!

@@ -6,6 +6,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import main.Model;
 
+import java.sql.SQLException;
+
 public class NewLabelController
 {
 	@FXML private TextField newLabelName;
@@ -14,8 +16,8 @@ public class NewLabelController
 	@FXML private javafx.scene.control.Label labelNameInvalidLabel;
 	@FXML private VBox newLabelSidebar;
 
-	private Model model;
-	private LabelStorageHandler labelStorageHandler;
+	final private Model model;
+	final private LabelStorageHandler labelStorageHandler;
 
 	public NewLabelController()
 	{
@@ -24,9 +26,37 @@ public class NewLabelController
 	}
 
 	@FXML
-	private void createNewLabel()
+	private void createLabel()
 	{
+		String labelName = this.newLabelName.getText();
 
+		if (LabelController.doesLabelExist(labelName))
+		{
+			this.labelExistsErrorLabel.setVisible(true);
+		}
+		else
+		{
+			if (LabelController.isNameValid(labelName))
+			{
+				try
+				{
+					int rowNumber = this.labelStorageHandler.create(labelName);
+
+					this.addLabelToModel(new Label(rowNumber, labelName));
+
+					this.closeCreateLabel();
+				}
+				catch (SQLException e)
+				{
+					System.err.println(e.getMessage()); //TODO: Write an exception better than this
+					this.failedToCreateLabelErrorLabel.setVisible(true);
+				}
+			}
+			else
+			{
+				this.labelNameInvalidLabel.setVisible(true);
+			}
+		}
 	}
 
 	private void addLabelToModel(Label label)
@@ -35,14 +65,12 @@ public class NewLabelController
 	}
 
 	@FXML
-	private void cancelCreateLabel()
+	private void closeCreateLabel()
 	{
-		this.newLabelName.setText(null); //TODO Check null is ok
 		this.newLabelSidebar.getParent().setVisible(false);
-	}
-
-	private boolean doesLabelExist(String name)
-	{
-		return this.model.getLabels().stream().map(Label::getName).anyMatch(s -> s.equals(name));
+		this.labelNameInvalidLabel.setVisible(false);
+		this.labelExistsErrorLabel.setVisible(false);
+		this.failedToCreateLabelErrorLabel.setVisible(false);
+		this.newLabelName.setText(null);
 	}
 }
