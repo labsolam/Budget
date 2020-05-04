@@ -1,16 +1,16 @@
 package label.controllers;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.DefaultStringConverter;
 import label.models.Label;
 import main.Model;
+import main.common.EditableTextFieldTableCell;
 
 import java.sql.SQLException;
 
@@ -34,11 +34,49 @@ public class LabelController
 	{
 		this.labelColumn.setCellValueFactory(c -> c.getValue().nameProperty());
 		this.labelColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+		this.labelColumn.setCellFactory(col -> new TextFieldTableCell<>(new DefaultStringConverter()));
+
+//		this.labelColumn.setCellFactory(col -> new TextFieldTableCell<>(new DefaultStringConverter()){
+//			@Override
+//			public void updateItem(String item, boolean empty)
+//			{
+//				if (empty || item == null)
+//				{
+//					setText(null);
+//					setGraphic(null);
+//				}
+//				else
+//				{
+//					//Setting up for the first time
+//					if (getItem() == null)
+//					{
+//						setText(item);
+//					}
+//					else if (!item.equals(getItem()))
+//					{
+//						if (doesLabelExist(item))
+//						{
+//							item = getItem();
+//						}
+//						else if (!isNameValid(item))
+//						{
+//							item = getItem();
+//						}
+//					}
+//					setText(item);
+//				}
+//				super.updateItem(item, empty);
+//				labelsTable.refresh();
+//			}
+//		});
+
 		this.labelColumn.setOnEditCommit(c ->
 		{
 			Label updateLabel = new Label(c.getRowValue());
 			updateLabel.setName(c.getNewValue());
-			this.updateLabel(updateLabel);
+//			this.updateLabel(updateLabel);
+//			this.labelsTable.refresh();
 			//TODO: https://stackoverflow.com/questions/34698986/cancel-the-modification-of-a-tableview-cell
 		});
 
