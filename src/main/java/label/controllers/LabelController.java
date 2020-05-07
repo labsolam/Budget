@@ -1,10 +1,11 @@
 package label.controllers;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.DefaultStringConverter;
@@ -33,51 +34,21 @@ public class LabelController
 	public void initialize()
 	{
 		this.labelColumn.setCellValueFactory(c -> c.getValue().nameProperty());
-		this.labelColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		this.labelColumn.setCellFactory(col -> new EditableTextFieldTableCell<>(new DefaultStringConverter())
+		{
+			@Override
+			public boolean updateAllowed(String newValue)
+			{
 
-		this.labelColumn.setCellFactory(col -> new TextFieldTableCell<>(new DefaultStringConverter()));
-
-//		this.labelColumn.setCellFactory(col -> new TextFieldTableCell<>(new DefaultStringConverter()){
-//			@Override
-//			public void updateItem(String item, boolean empty)
-//			{
-//				if (empty || item == null)
-//				{
-//					setText(null);
-//					setGraphic(null);
-//				}
-//				else
-//				{
-//					//Setting up for the first time
-//					if (getItem() == null)
-//					{
-//						setText(item);
-//					}
-//					else if (!item.equals(getItem()))
-//					{
-//						if (doesLabelExist(item))
-//						{
-//							item = getItem();
-//						}
-//						else if (!isNameValid(item))
-//						{
-//							item = getItem();
-//						}
-//					}
-//					setText(item);
-//				}
-//				super.updateItem(item, empty);
-//				labelsTable.refresh();
-//			}
-//		});
+				return canUpdateLabel(newValue);
+			}
+		});
 
 		this.labelColumn.setOnEditCommit(c ->
 		{
 			Label updateLabel = new Label(c.getRowValue());
 			updateLabel.setName(c.getNewValue());
-//			this.updateLabel(updateLabel);
-//			this.labelsTable.refresh();
-			//TODO: https://stackoverflow.com/questions/34698986/cancel-the-modification-of-a-tableview-cell
+			this.updateLabel(updateLabel);
 		});
 
 		this.deleteColumn.setCellValueFactory(c ->
@@ -114,13 +85,27 @@ public class LabelController
 		}
 	}
 
+	private boolean canUpdateLabel(String newLabel)
+	{
+		if (doesLabelExist(newLabel))
+		{
+			Alert alert = new Alert(Alert.AlertType.INFORMATION, "Label already exists with the new name.");
+			alert.show();
+			return false;
+		}
+		else if (!isNameValid(newLabel))
+		{
+			Alert alert = new Alert(Alert.AlertType.INFORMATION, "Label name is invalid.");
+			alert.show();
+			return false;
+		}
+
+		return true;
+	}
+
 	private void updateLabel(Label labelToUpdate)
 	{
-		if (doesLabelExist(labelToUpdate.getName()))
-		{
-			//Todo: label exists
-		}
-		else if (isNameValid(labelToUpdate.getName()))
+		if (isNameValid(labelToUpdate.getName()))
 		{
 			try
 			{
@@ -138,10 +123,6 @@ public class LabelController
 			{
 				System.err.println(e.getMessage()); //TODO: Write an exception better than this
 			}
-		}
-		else
-		{
-			//TODO: Label name invalid
 		}
 	}
 
